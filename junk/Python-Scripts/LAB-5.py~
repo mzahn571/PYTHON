@@ -1,0 +1,36 @@
+import telnetlib
+import sys
+import time
+
+def COMMONBEGIN():
+    time.sleep (2)
+    tn.write("\r")
+    tn.write(enable + "\r")
+    tn.write(terminal_length + "\r")
+    tn.write(shrun + "\r")
+    tst = tn.read_until('login')
+    f = open("/home/student/Desktop/PYTHON/TEST/tst.txt")
+    f.write(str(tst.replace("192.168.10.1" , "10.10.10.1")))
+    f.close()
+    
+def COMMONEND():
+    tn.write(end + "\r")
+    tn.write(exit + "\r")
+    tn.write("\r\n")
+    tn.close()
+    
+ipaddr ='127.0.0.1'
+port = '2001'
+
+enable = "enable"
+conf = "configure terminal"
+host = "hostname R1"
+end = "end"
+exit = "exit"
+shrun = "show run"
+terminal_length = "terminal length 0"
+
+tn = telnetlib.Telnet(ipaddr , port )
+COMMONBEGIN()
+COMMONEND()
+sys.exit("operation completed")

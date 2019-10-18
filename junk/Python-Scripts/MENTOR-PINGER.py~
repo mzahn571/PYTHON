@@ -1,0 +1,58 @@
+import telnetlib
+import sys
+import time
+import re
+from MENTOR_VLAN import Session
+
+ipaddr ='127.0.0.1'
+port = '2222'
+
+enable = "enable"
+conf = "configure terminal"
+host = "hostname R1"
+end = "end"
+exit = "exit"
+disable = 'disable'
+
+
+HOSTB_IP = "192.168.100.2"
+HOSTB = "HOSTB"
+
+loopbacks = {HOSTB:HOSTB_IP}
+
+HOST_B = loopbacks[HOSTB]
+
+routers = [HOST_B]
+
+def Ping(router):
+    print "Checking Connectivity....."
+    tn = telnetlib.Telnet(ipaddr , port )
+    time.sleep (2)
+    tn.write("\r")
+    tn.write(enable + "\r")
+    tn.write("ping  " + router)
+    tn.write("\r")
+    time.sleep(5)
+    test = tn.read_until('Success')
+    tn.write(disable + "\r")
+    test2 = re.findall(r'!!!', test)
+    tn.close()
+    if '!!!' in test2:
+        print 'Reachabilty to Router is Good!'
+        value = 'ONE'
+    else:
+        print 'No Reachabilty to Node'
+        value = 'TWO'
+    return value
+
+test = Session()
+for router in routers:
+    tst = Ping(router)
+    if tst == 'ONE':
+        print "Everthing Appears to be Tip Top!!!"
+    if tst == 'TWO':
+        print 'Checking Vlans...'
+        PAUL = Session()
+        TEXT = PAUL.CHECKER()
+        
+sys.exit("operation completed")
