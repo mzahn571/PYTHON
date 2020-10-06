@@ -1,0 +1,18 @@
+New connections will be remembered.
+
+
+Status       Local     Remote                    Network
+
+-------------------------------------------------------------------------------
+OK           H:        \\velomp1g\home           Microsoft Windows Network
+             V:        \\collaboration.ad.qintra.com\bu\qgsi\QTS\Programs\CyberSecurity\cyberops\Tools\Circuit ID 
+                                                Web Client Network
+             W:        \\ctl.intranet\govsvcs\IPSS_Capabilities\Customer Activations 
+                                                Microsoft Windows Network
+             X:        \\ctl.intranet\govsvcs\ECS 
+                                                Microsoft Windows Network
+             Y:        \\ctl.intranet\govsvcs    Microsoft Windows Network
+Unavailable  Z:        \\ctl.intranet\govsvcs\ipss 
+                                                Microsoft Windows Network
+The command completed successfully.
+

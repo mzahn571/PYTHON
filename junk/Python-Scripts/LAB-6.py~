@@ -1,0 +1,47 @@
+import telnetlib
+import sys
+import time
+
+ipaddr ='127.0.0.1'
+enable = "enable"
+disable = 'disable'
+conf = "configure terminal"
+end = "end"
+exit = "exit"
+shrun = "show run"
+terminal_length = "terminal length 0"
+
+filelist = open("/home/student/Desktop/PYTHON/TEST/FILES.txt")
+
+class Session(object): 
+        
+    def Getrun(self, session, ipaddr, port):
+        session = telnetlib.Telnet(ipaddr, port)
+        time.sleep (2)
+        session.write("\r\n")
+        session.write(enable + "\r\n")
+        session.write(terminal_length + "\r\n")
+        session.write(shrun + "\r\n")
+        session.write(disable + "\r\n")
+        file = session.read_until('\nend')
+        session.close()
+        return file
+    
+    def Postrun(self, files, file):
+            HOME = "/home/student/Desktop/PYTHON/TEST/Routers/%s" %(files)
+            f = open(HOME.strip(), "w")
+            f.write(str(file))
+            f.close()
+                  
+tn1 = Session()
+tn2 = Session()
+tn3 = Session()
+tn4 = Session()
+file1 = tn1.Getrun("tn1",  ipaddr, "2001")
+file2 = tn1.Getrun("tn2",  ipaddr, "2002")
+file3 = tn1.Getrun("tn3",  ipaddr, "2003")
+file4 = tn1.Getrun("tn4",  ipaddr, "2004")
+runfiles = [file1,file2,file3,file4]
+for i,j in zip(filelist, runfiles):
+        tn1.Postrun(i,j)
+sys.exit("operation completed")

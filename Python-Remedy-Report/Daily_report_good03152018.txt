@@ -1,0 +1,63 @@
+#Remedy Report 
+#
+import copy
+import openpyxl
+from openpyxl import Workbook
+import os
+import shutil
+import sys
+import csv
+import pathlib
+import xlsxwriter
+import glob
+import xlrd
+import numpy as np
+import pandas as pd
+#import pyexcel.ext.xlsx
+#from pyexcel.cookbook import merge_all_to_a_book
+
+
+
+##Display format for IDLE
+pd.set_option('display.height', 1000)
+pd.set_option('display.max_rows', 500)
+pd.set_option('display.max_columns', 500)
+pd.set_option('display.width', 1000)
+
+## Call a workboo, and a worksheet and applies it to a dataframe
+## DataFrame is sorted by 'Short Problem Description'
+xl = pd.ExcelFile("C:/Users/ab21600/Documents/Python-Remedy-Report/test1.xlsx")
+df = xl.parse("Sheet 1")
+df = df.sort_values(by=['Short Problem Description'])
+## Remove and replaces NaN, in this just removed it with a space  
+df.fillna(' ', inplace=True)
+
+##Copying df to df1
+df1 = pd.DataFrame(df)
+
+#condition = df1.set_index('Short Problem Description').filter(regex='^\[A]', axis=0)
+#df.set_index('Short Problem Description', inplace=True)
+#df2 = df.set_index('Short Problem Description')
+#print(df2.head())
+#df2.to_csv("C:/Users/ab21600/Documents/Python-Remedy-Report/newcsv.csv")
+
+Activation = df1.set_index('Short Problem Description').filter(regex='^\[A]', axis=0)
+Maintenance = df1.set_index('Short Problem Description').filter(regex='^\[M]', axis=0)
+Internal = df1.set_index('Short Problem Description').filter(regex='^\[I]', axis=0)
+Hpriotity = df1.set_index('Short Problem Description').filter(regex='^\*', axis=0)
+## Place holder until we can determine query
+#Outages = df1.set_index('Short Problem Description').filter(regex='^\*', axis=0)
+
+writer = pd.ExcelWriter('C:/Users/ab21600/Documents/Python-Remedy-Report/output.xlsx', engine='xlsxwriter')
+Activation.to_excel(writer, sheet_name='sheet1')
+Maintenance.to_excel(writer, sheet_name='sheet2')
+Internal.to_excel(writer, sheet_name='sheet3')
+Hpriotity.to_excel(writer, sheet_name='sheet4')
+
+#condition.to_csv("C:/Users/ab21600/Documents/Python-Remedy-Report/newcsv.csv")
+#print(condition)
+#df = df.sort_values(columns="Short Problem Description")
+#df = df.sort_values(by=["Short Problem Description", "NTM Ticket ID", "Create Date", "Last-Modified-Date", "Service ID", "Priority", "Last External Comment Time"])                        
+#writer = pd.ExcelWriter('C:/Users/ab21600/Documents/Python-Remedy-Report/output.xlsx')
+#df.to_excel(writer,sheet_name='Sheet1',columns=["NTM Ticket ID", "Create Date", "Last-Modified-Date", "Service ID", "Short Problem Description", "Priority", "Last External Comment Time"],index=False)
+writer.save()

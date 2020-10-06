@@ -1,0 +1,82 @@
+#!/usr/local/bin/python
+from datetime import datetime
+
+import subprocess
+import sys
+
+HOST1="ipsec01"
+HOST2="ipsec02"
+HOST3="ipsec03"
+HOST4="ipsec04"
+HOST5="ipsec05"
+HOST6="ipsec06"
+#HOST7="ipsec07"
+#HOST8="ipsec08"
+TLSFW01="tlsfw01"
+FW01="fw01"
+
+FORMAT = "%m%d%Y-%H:%M-UTC"
+
+
+PATH1 = "/data/1_Network_Config_Backups/IPSEC01/ipsec01_config"
+PATH2 = "/data/1_Network_Config_Backups/IPSEC02/ipsec02_config"
+PATH3 = "/data/1_Network_Config_Backups/IPSEC03/ipsec03_config"
+PATH4 = "/data/1_Network_Config_Backups/IPSEC04/ipsec04_config"
+PATH5 = "/data/1_Network_Config_Backups/IPSEC05/ipsec05_config"
+PATH6 = "/data/1_Network_Config_Backups/IPSEC06/ipsec06_config"
+#PATH7 = "/data/1_Network_Config_Backups/IPSEC07/ipsec07_config"
+#PATH8 = "/data/1_Network_Config_Backups/IPSEC08/ipsec01_config"
+#PATH9 = "/data/1_Network_Config_Backups/TLSFW01/tlsfw01_config"
+PATH10 = "/data/1_Network_Config_Backups/FW01/fw01_config"
+
+NEW_PATH1 = '%s_%s' % (PATH1,datetime.now().strftime(FORMAT))
+NEW_PATH2 = '%s_%s' % (PATH2,datetime.now().strftime(FORMAT))
+NEW_PATH3 = '%s_%s' % (PATH3,datetime.now().strftime(FORMAT))
+NEW_PATH4 = '%s_%s' % (PATH4,datetime.now().strftime(FORMAT))
+NEW_PATH5 = '%s_%s' % (PATH5,datetime.now().strftime(FORMAT))
+NEW_PATH6 = '%s_%s' % (PATH6,datetime.now().strftime(FORMAT))
+#NEW_PATH7 = '%s_%s' % (PATH7,datetime.now().strftime(FORMAT))
+#NEW_PATH8 = '%s_%s' % (PATH8,datetime.now().strftime(FORMAT))
+#NEW_PATH9 = '%s_%s' % (PATH9,datetime.now().strftime(FORMAT))
+NEW_PATH10 = '%s_%s' % (PATH10,datetime.now().strftime(FORMAT))
+
+COMMAND1="show configuration |display set | no-more"
+
+#Cisco Commands
+#COMMAND_2="terminal length 0"
+
+COMMAND_3="show running-configuration"
+
+
+def bk_operation(NEW_PATH, HOST, COMMAND):
+    """ Define Operations to backup the configuration files"""
+    f = open(NEW_PATH, "w")
+    ssh = subprocess.Popen(["ssh", "%s" % HOST, COMMAND, COMMAND],
+        stdout=f,
+        stderr= subprocess.PIPE)
+
+
+    result = ssh.communicate()[0]
+
+    if result == []:
+        error = ssh.stderr()
+        print >>sys.stderr, "ERROR: %s" % error
+    else:
+        print(HOST, "backup completed")
+        return result
+
+#Juniper Devices
+bk_operation(NEW_PATH1, HOST1, COMMAND1)
+bk_operation(NEW_PATH3, HOST3, COMMAND1)
+bk_operation(NEW_PATH5, HOST5, COMMAND1)
+bk_operation(NEW_PATH6, HOST6, COMMAND1)
+#bk_operation(NEW_PATH7, HOST7, COMMAND1)
+#bk_operation(NEW_PATH8, HOST8, COMMAND1)
+#bk_operation(NEW_PATH9, HOST9, COMMAND1)
+bk_operation(NEW_PATH10, FW01, COMMAND1)
+
+#Cisco Devices
+bk_operation(NEW_PATH2, HOST2, COMMAND_3)
+bk_operation(NEW_PATH4, HOST4, COMMAND_3)
+
+
