@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 # vim: ft=sh
 # ver 3
 
@@ -123,4 +122,3 @@ function parse_git_dirty {
 }
 
 export PS1="\[\e[36m\]\W\[\e[m\]\[\e[32m\]\`parse_git_branch\`\[\e[m\] $ "
->>>>>>> 4bc346ef756ddf70771f87b34f774d0b2e6e3424
