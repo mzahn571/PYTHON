@@ -1,0 +1,398 @@
+[2023-04-04 14:30:22,978] dev-dsk-mzahn-1e-e30a3bfc.us-east-1.amazon.com/INFO/locust.main: No run time limit set, use CTRL+C to interrupt
+[2023-04-04 14:30:22,978] dev-dsk-mzahn-1e-e30a3bfc.us-east-1.amazon.com/INFO/locust.main: Starting Locust 2.15.1
+[2023-04-04 14:30:22,980] dev-dsk-mzahn-1e-e30a3bfc.us-east-1.amazon.com/INFO/locust.runners: Ramping to 10 users at a rate of 60.00 per second
+[2023-04-04 14:30:22,981] dev-dsk-mzahn-1e-e30a3bfc.us-east-1.amazon.com/INFO/locust.runners: All users spawned: {"User": 10} (10 total users)
+[2023-04-04 14:30:22,981] dev-dsk-mzahn-1e-e30a3bfc.us-east-1.amazon.com/INFO/root: Starting request for posts
+[2023-04-04 14:30:22,986] dev-dsk-mzahn-1e-e30a3bfc.us-east-1.amazon.com/INFO/root: Starting request for todos
+[2023-04-04 14:30:22,987] dev-dsk-mzahn-1e-e30a3bfc.us-east-1.amazon.com/INFO/root: Starting request for posts
+[2023-04-04 14:30:22,987] dev-dsk-mzahn-1e-e30a3bfc.us-east-1.amazon.com/INFO/root: Starting request for posts
+[2023-04-04 14:30:22,988] dev-dsk-mzahn-1e-e30a3bfc.us-east-1.amazon.com/INFO/root: Starting request for posts
+[2023-04-04 14:30:22,988] dev-dsk-mzahn-1e-e30a3bfc.us-east-1.amazon.com/INFO/root: Starting request for posts
+[2023-04-04 14:30:22,988] dev-dsk-mzahn-1e-e30a3bfc.us-east-1.amazon.com/INFO/root: Starting request for todos
+[2023-04-04 14:30:22,989] dev-dsk-mzahn-1e-e30a3bfc.us-east-1.amazon.com/INFO/root: Starting request for posts
+[2023-04-04 14:30:22,989] dev-dsk-mzahn-1e-e30a3bfc.us-east-1.amazon.com/INFO/root: Starting request for todos
+[2023-04-04 14:30:22,990] dev-dsk-mzahn-1e-e30a3bfc.us-east-1.amazon.com/INFO/root: Starting request for posts
+[2023-04-04 14:30:23,693] dev-dsk-mzahn-1e-e30a3bfc.us-east-1.amazon.com/INFO/root: Starting request for todos
+[2023-04-04 14:30:23,897] dev-dsk-mzahn-1e-e30a3bfc.us-east-1.amazon.com/INFO/root: Starting request for posts
+[2023-04-04 14:30:24,191] dev-dsk-mzahn-1e-e30a3bfc.us-east-1.amazon.com/INFO/root: <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<title>405 Method Not Allowed</title>
+<h1>Method Not Allowed</h1>
+<p>The method is not allowed for the requested URL.</p>
+
+[2023-04-04 14:30:24,191] dev-dsk-mzahn-1e-e30a3bfc.us-east-1.amazon.com/INFO/root: Starting request for todos
+[2023-04-04 14:30:24,290] dev-dsk-mzahn-1e-e30a3bfc.us-east-1.amazon.com/INFO/root: Starting request for posts
+[2023-04-04 14:30:24,674] dev-dsk-mzahn-1e-e30a3bfc.us-east-1.amazon.com/INFO/root: <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<title>405 Method Not Allowed</title>
+<h1>Method Not Allowed</h1>
+<p>The method is not allowed for the requested URL.</p>
+
+[2023-04-04 14:30:24,674] dev-dsk-mzahn-1e-e30a3bfc.us-east-1.amazon.com/INFO/root: Starting request for todos
+[2023-04-04 14:30:25,281] dev-dsk-mzahn-1e-e30a3bfc.us-east-1.amazon.com/INFO/root: <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<title>405 Method Not Allowed</title>
+<h1>Method Not Allowed</h1>
+<p>The method is not allowed for the requested URL.</p>
+
+[2023-04-04 14:30:25,281] dev-dsk-mzahn-1e-e30a3bfc.us-east-1.amazon.com/INFO/root: Starting request for posts
+[2023-04-04 14:30:25,401] dev-dsk-mzahn-1e-e30a3bfc.us-east-1.amazon.com/INFO/root: <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<title>405 Method Not Allowed</title>
+<h1>Method Not Allowed</h1>
+<p>The method is not allowed for the requested URL.</p>
+
+[2023-04-04 14:30:25,401] dev-dsk-mzahn-1e-e30a3bfc.us-east-1.amazon.com/INFO/root: Starting request for posts
+[2023-04-04 14:30:25,667] dev-dsk-mzahn-1e-e30a3bfc.us-east-1.amazon.com/INFO/root: <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<title>405 Method Not Allowed</title>
+<h1>Method Not Allowed</h1>
+<p>The method is not allowed for the requested URL.</p>
+
+[2023-04-04 14:30:25,667] dev-dsk-mzahn-1e-e30a3bfc.us-east-1.amazon.com/INFO/root: Starting request for posts
+[2023-04-04 14:30:25,772] dev-dsk-mzahn-1e-e30a3bfc.us-east-1.amazon.com/INFO/root: <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<title>405 Method Not Allowed</title>
+<h1>Method Not Allowed</h1>
+<p>The method is not allowed for the requested URL.</p>
+
+[2023-04-04 14:30:25,772] dev-dsk-mzahn-1e-e30a3bfc.us-east-1.amazon.com/INFO/root: Starting request for posts
+[2023-04-04 14:30:26,131] dev-dsk-mzahn-1e-e30a3bfc.us-east-1.amazon.com/INFO/root: <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<title>405 Method Not Allowed</title>
+<h1>Method Not Allowed</h1>
+<p>The method is not allowed for the requested URL.</p>
+
+[2023-04-04 14:30:26,132] dev-dsk-mzahn-1e-e30a3bfc.us-east-1.amazon.com/INFO/root: Starting request for todos
+[2023-04-04 14:30:26,144] dev-dsk-mzahn-1e-e30a3bfc.us-east-1.amazon.com/INFO/root: <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<title>405 Method Not Allowed</title>
+<h1>Method Not Allowed</h1>
+<p>The method is not allowed for the requested URL.</p>
+
+[2023-04-04 14:30:26,144] dev-dsk-mzahn-1e-e30a3bfc.us-east-1.amazon.com/INFO/root: Starting request for todos
+[2023-04-04 14:30:26,395] dev-dsk-mzahn-1e-e30a3bfc.us-east-1.amazon.com/INFO/root: Starting request for todos
+[2023-04-04 14:30:26,718] dev-dsk-mzahn-1e-e30a3bfc.us-east-1.amazon.com/INFO/root: <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<title>405 Method Not Allowed</title>
+<h1>Method Not Allowed</h1>
+<p>The method is not allowed for the requested URL.</p>
+
+[2023-04-04 14:30:26,718] dev-dsk-mzahn-1e-e30a3bfc.us-east-1.amazon.com/INFO/root: Starting request for todos
+[2023-04-04 14:30:27,159] dev-dsk-mzahn-1e-e30a3bfc.us-east-1.amazon.com/INFO/root: <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<title>405 Method Not Allowed</title>
+<h1>Method Not Allowed</h1>
+<p>The method is not allowed for the requested URL.</p>
+
+[2023-04-04 14:30:27,159] dev-dsk-mzahn-1e-e30a3bfc.us-east-1.amazon.com/INFO/root: Starting request for posts
+[2023-04-04 14:30:27,414] dev-dsk-mzahn-1e-e30a3bfc.us-east-1.amazon.com/INFO/root: Starting request for posts
+[2023-04-04 14:30:27,985] dev-dsk-mzahn-1e-e30a3bfc.us-east-1.amazon.com/INFO/root: Starting request for todos
+[2023-04-04 14:30:28,163] dev-dsk-mzahn-1e-e30a3bfc.us-east-1.amazon.com/INFO/root: <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<title>405 Method Not Allowed</title>
+<h1>Method Not Allowed</h1>
+<p>The method is not allowed for the requested URL.</p>
+
+[2023-04-04 14:30:28,163] dev-dsk-mzahn-1e-e30a3bfc.us-east-1.amazon.com/INFO/root: Starting request for todos
+[2023-04-04 14:30:28,214] dev-dsk-mzahn-1e-e30a3bfc.us-east-1.amazon.com/INFO/root: Starting request for posts
+[2023-04-04 14:30:28,403] dev-dsk-mzahn-1e-e30a3bfc.us-east-1.amazon.com/INFO/root: Starting request for todos
+[2023-04-04 14:30:28,530] dev-dsk-mzahn-1e-e30a3bfc.us-east-1.amazon.com/INFO/root: Starting request for posts
+[2023-04-04 14:30:28,607] dev-dsk-mzahn-1e-e30a3bfc.us-east-1.amazon.com/INFO/root: Starting request for posts
+[2023-04-04 14:30:28,613] dev-dsk-mzahn-1e-e30a3bfc.us-east-1.amazon.com/INFO/root: <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<title>405 Method Not Allowed</title>
+<h1>Method Not Allowed</h1>
+<p>The method is not allowed for the requested URL.</p>
+
+[2023-04-04 14:30:28,614] dev-dsk-mzahn-1e-e30a3bfc.us-east-1.amazon.com/INFO/root: Starting request for posts
+[2023-04-04 14:30:28,655] dev-dsk-mzahn-1e-e30a3bfc.us-east-1.amazon.com/INFO/root: <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<title>405 Method Not Allowed</title>
+<h1>Method Not Allowed</h1>
+<p>The method is not allowed for the requested URL.</p>
+
+[2023-04-04 14:30:28,655] dev-dsk-mzahn-1e-e30a3bfc.us-east-1.amazon.com/INFO/root: Starting request for posts
+[2023-04-04 14:30:29,656] dev-dsk-mzahn-1e-e30a3bfc.us-east-1.amazon.com/INFO/root: Starting request for posts
+[2023-04-04 14:30:30,159] dev-dsk-mzahn-1e-e30a3bfc.us-east-1.amazon.com/INFO/root: <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<title>405 Method Not Allowed</title>
+<h1>Method Not Allowed</h1>
+<p>The method is not allowed for the requested URL.</p>
+
+[2023-04-04 14:30:30,159] dev-dsk-mzahn-1e-e30a3bfc.us-east-1.amazon.com/INFO/root: Starting request for todos
+[2023-04-04 14:30:30,330] dev-dsk-mzahn-1e-e30a3bfc.us-east-1.amazon.com/INFO/root: <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<title>405 Method Not Allowed</title>
+<h1>Method Not Allowed</h1>
+<p>The method is not allowed for the requested URL.</p>
+
+[2023-04-04 14:30:30,330] dev-dsk-mzahn-1e-e30a3bfc.us-east-1.amazon.com/INFO/root: Starting request for todos
+[2023-04-04 14:30:30,584] dev-dsk-mzahn-1e-e30a3bfc.us-east-1.amazon.com/INFO/root: Starting request for todos
+[2023-04-04 14:30:30,781] dev-dsk-mzahn-1e-e30a3bfc.us-east-1.amazon.com/INFO/root: <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<title>405 Method Not Allowed</title>
+<h1>Method Not Allowed</h1>
+<p>The method is not allowed for the requested URL.</p>
+
+[2023-04-04 14:30:30,781] dev-dsk-mzahn-1e-e30a3bfc.us-east-1.amazon.com/INFO/root: Starting request for posts
+[2023-04-04 14:30:30,936] dev-dsk-mzahn-1e-e30a3bfc.us-east-1.amazon.com/INFO/root: <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<title>405 Method Not Allowed</title>
+<h1>Method Not Allowed</h1>
+<p>The method is not allowed for the requested URL.</p>
+
+[2023-04-04 14:30:30,937] dev-dsk-mzahn-1e-e30a3bfc.us-east-1.amazon.com/INFO/root: Starting request for posts
+[2023-04-04 14:30:30,991] dev-dsk-mzahn-1e-e30a3bfc.us-east-1.amazon.com/INFO/root: Starting request for todos
+[2023-04-04 14:30:31,260] dev-dsk-mzahn-1e-e30a3bfc.us-east-1.amazon.com/INFO/root: Starting request for todos
+[2023-04-04 14:30:31,706] dev-dsk-mzahn-1e-e30a3bfc.us-east-1.amazon.com/INFO/root: <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<title>405 Method Not Allowed</title>
+<h1>Method Not Allowed</h1>
+<p>The method is not allowed for the requested URL.</p>
+
+[2023-04-04 14:30:31,706] dev-dsk-mzahn-1e-e30a3bfc.us-east-1.amazon.com/INFO/root: Starting request for posts
+[2023-04-04 14:30:32,100] dev-dsk-mzahn-1e-e30a3bfc.us-east-1.amazon.com/INFO/root: Starting request for posts
+[2023-04-04 14:30:32,880] dev-dsk-mzahn-1e-e30a3bfc.us-east-1.amazon.com/INFO/root: <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<title>405 Method Not Allowed</title>
+<h1>Method Not Allowed</h1>
+<p>The method is not allowed for the requested URL.</p>
+
+[2023-04-04 14:30:32,881] dev-dsk-mzahn-1e-e30a3bfc.us-east-1.amazon.com/INFO/root: Starting request for todos
+[2023-04-04 14:30:32,894] dev-dsk-mzahn-1e-e30a3bfc.us-east-1.amazon.com/INFO/root: Starting request for posts
+[2023-04-04 14:30:32,949] dev-dsk-mzahn-1e-e30a3bfc.us-east-1.amazon.com/INFO/root: <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<title>405 Method Not Allowed</title>
+<h1>Method Not Allowed</h1>
+<p>The method is not allowed for the requested URL.</p>
+
+[2023-04-04 14:30:32,949] dev-dsk-mzahn-1e-e30a3bfc.us-east-1.amazon.com/INFO/root: Starting request for todos
+[2023-04-04 14:30:33,197] dev-dsk-mzahn-1e-e30a3bfc.us-east-1.amazon.com/INFO/root: <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<title>405 Method Not Allowed</title>
+<h1>Method Not Allowed</h1>
+<p>The method is not allowed for the requested URL.</p>
+
+[2023-04-04 14:30:33,198] dev-dsk-mzahn-1e-e30a3bfc.us-east-1.amazon.com/INFO/root: Starting request for todos
+[2023-04-04 14:30:33,510] dev-dsk-mzahn-1e-e30a3bfc.us-east-1.amazon.com/INFO/root: <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<title>405 Method Not Allowed</title>
+<h1>Method Not Allowed</h1>
+<p>The method is not allowed for the requested URL.</p>
+
+[2023-04-04 14:30:33,510] dev-dsk-mzahn-1e-e30a3bfc.us-east-1.amazon.com/INFO/root: Starting request for todos
+[2023-04-04 14:30:33,545] dev-dsk-mzahn-1e-e30a3bfc.us-east-1.amazon.com/INFO/root: <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<title>405 Method Not Allowed</title>
+<h1>Method Not Allowed</h1>
+<p>The method is not allowed for the requested URL.</p>
+
+[2023-04-04 14:30:33,545] dev-dsk-mzahn-1e-e30a3bfc.us-east-1.amazon.com/INFO/root: Starting request for posts
+[2023-04-04 14:30:33,996] dev-dsk-mzahn-1e-e30a3bfc.us-east-1.amazon.com/INFO/root: <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<title>405 Method Not Allowed</title>
+<h1>Method Not Allowed</h1>
+<p>The method is not allowed for the requested URL.</p>
+
+[2023-04-04 14:30:33,997] dev-dsk-mzahn-1e-e30a3bfc.us-east-1.amazon.com/INFO/root: Starting request for posts
+[2023-04-04 14:30:34,012] dev-dsk-mzahn-1e-e30a3bfc.us-east-1.amazon.com/INFO/root: <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<title>405 Method Not Allowed</title>
+<h1>Method Not Allowed</h1>
+<p>The method is not allowed for the requested URL.</p>
+
+[2023-04-04 14:30:34,012] dev-dsk-mzahn-1e-e30a3bfc.us-east-1.amazon.com/INFO/root: Starting request for todos
+[2023-04-04 14:30:34,094] dev-dsk-mzahn-1e-e30a3bfc.us-east-1.amazon.com/INFO/root: Starting request for posts
+[2023-04-04 14:30:34,137] dev-dsk-mzahn-1e-e30a3bfc.us-east-1.amazon.com/INFO/root: Starting request for todos
+[2023-04-04 14:30:34,168] dev-dsk-mzahn-1e-e30a3bfc.us-east-1.amazon.com/INFO/root: Starting request for posts
+[2023-04-04 14:30:34,181] dev-dsk-mzahn-1e-e30a3bfc.us-east-1.amazon.com/INFO/root: Starting request for posts
+[2023-04-04 14:30:34,445] dev-dsk-mzahn-1e-e30a3bfc.us-east-1.amazon.com/INFO/root: Starting request for posts
+[2023-04-04 14:30:34,598] dev-dsk-mzahn-1e-e30a3bfc.us-east-1.amazon.com/INFO/root: Starting request for posts
+[2023-04-04 14:30:34,917] dev-dsk-mzahn-1e-e30a3bfc.us-east-1.amazon.com/INFO/root: <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<title>405 Method Not Allowed</title>
+<h1>Method Not Allowed</h1>
+<p>The method is not allowed for the requested URL.</p>
+
+[2023-04-04 14:30:34,918] dev-dsk-mzahn-1e-e30a3bfc.us-east-1.amazon.com/INFO/root: Starting request for todos
+[2023-04-04 14:30:34,918] dev-dsk-mzahn-1e-e30a3bfc.us-east-1.amazon.com/INFO/root: <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<title>405 Method Not Allowed</title>
+<h1>Method Not Allowed</h1>
+<p>The method is not allowed for the requested URL.</p>
+
+[2023-04-04 14:30:34,918] dev-dsk-mzahn-1e-e30a3bfc.us-east-1.amazon.com/INFO/root: Starting request for posts
+[2023-04-04 14:30:35,167] dev-dsk-mzahn-1e-e30a3bfc.us-east-1.amazon.com/INFO/root: Starting request for todos
+[2023-04-04 14:30:35,285] dev-dsk-mzahn-1e-e30a3bfc.us-east-1.amazon.com/INFO/root: <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<title>405 Method Not Allowed</title>
+<h1>Method Not Allowed</h1>
+<p>The method is not allowed for the requested URL.</p>
+
+[2023-04-04 14:30:35,285] dev-dsk-mzahn-1e-e30a3bfc.us-east-1.amazon.com/INFO/root: Starting request for posts
+[2023-04-04 14:30:36,045] dev-dsk-mzahn-1e-e30a3bfc.us-east-1.amazon.com/INFO/root: <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<title>405 Method Not Allowed</title>
+<h1>Method Not Allowed</h1>
+<p>The method is not allowed for the requested URL.</p>
+
+[2023-04-04 14:30:36,046] dev-dsk-mzahn-1e-e30a3bfc.us-east-1.amazon.com/INFO/root: Starting request for todos
+[2023-04-04 14:30:36,832] dev-dsk-mzahn-1e-e30a3bfc.us-east-1.amazon.com/INFO/root: <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<title>405 Method Not Allowed</title>
+<h1>Method Not Allowed</h1>
+<p>The method is not allowed for the requested URL.</p>
+
+[2023-04-04 14:30:36,832] dev-dsk-mzahn-1e-e30a3bfc.us-east-1.amazon.com/INFO/root: Starting request for todos
+[2023-04-04 14:30:36,833] dev-dsk-mzahn-1e-e30a3bfc.us-east-1.amazon.com/INFO/root: Starting request for posts
+[2023-04-04 14:30:36,834] dev-dsk-mzahn-1e-e30a3bfc.us-east-1.amazon.com/INFO/root: <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<title>405 Method Not Allowed</title>
+<h1>Method Not Allowed</h1>
+<p>The method is not allowed for the requested URL.</p>
+
+[2023-04-04 14:30:36,834] dev-dsk-mzahn-1e-e30a3bfc.us-east-1.amazon.com/INFO/root: Starting request for todos
+[2023-04-04 14:30:37,489] dev-dsk-mzahn-1e-e30a3bfc.us-east-1.amazon.com/INFO/root: <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<title>405 Method Not Allowed</title>
+<h1>Method Not Allowed</h1>
+<p>The method is not allowed for the requested URL.</p>
+
+[2023-04-04 14:30:37,489] dev-dsk-mzahn-1e-e30a3bfc.us-east-1.amazon.com/INFO/root: Starting request for posts
+[2023-04-04 14:30:37,498] dev-dsk-mzahn-1e-e30a3bfc.us-east-1.amazon.com/INFO/root: <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<title>405 Method Not Allowed</title>
+<h1>Method Not Allowed</h1>
+<p>The method is not allowed for the requested URL.</p>
+
+[2023-04-04 14:30:37,499] dev-dsk-mzahn-1e-e30a3bfc.us-east-1.amazon.com/INFO/root: Starting request for posts
+[2023-04-04 14:30:37,567] dev-dsk-mzahn-1e-e30a3bfc.us-east-1.amazon.com/INFO/root: Starting request for posts
+[2023-04-04 14:30:37,713] dev-dsk-mzahn-1e-e30a3bfc.us-east-1.amazon.com/INFO/root: Starting request for todos
+[2023-04-04 14:30:38,651] dev-dsk-mzahn-1e-e30a3bfc.us-east-1.amazon.com/INFO/root: <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<title>405 Method Not Allowed</title>
+<h1>Method Not Allowed</h1>
+<p>The method is not allowed for the requested URL.</p>
+
+[2023-04-04 14:30:38,652] dev-dsk-mzahn-1e-e30a3bfc.us-east-1.amazon.com/INFO/root: Starting request for todos
+[2023-04-04 14:30:39,111] dev-dsk-mzahn-1e-e30a3bfc.us-east-1.amazon.com/INFO/root: Starting request for posts
+[2023-04-04 14:30:39,237] dev-dsk-mzahn-1e-e30a3bfc.us-east-1.amazon.com/INFO/root: <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<title>405 Method Not Allowed</title>
+<h1>Method Not Allowed</h1>
+<p>The method is not allowed for the requested URL.</p>
+
+[2023-04-04 14:30:39,237] dev-dsk-mzahn-1e-e30a3bfc.us-east-1.amazon.com/INFO/root: Starting request for posts
+[2023-04-04 14:30:39,260] dev-dsk-mzahn-1e-e30a3bfc.us-east-1.amazon.com/INFO/root: Starting request for todos
+[2023-04-04 14:30:39,352] dev-dsk-mzahn-1e-e30a3bfc.us-east-1.amazon.com/INFO/root: <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<title>405 Method Not Allowed</title>
+<h1>Method Not Allowed</h1>
+<p>The method is not allowed for the requested URL.</p>
+
+[2023-04-04 14:30:39,353] dev-dsk-mzahn-1e-e30a3bfc.us-east-1.amazon.com/INFO/root: Starting request for todos
+[2023-04-04 14:30:39,734] dev-dsk-mzahn-1e-e30a3bfc.us-east-1.amazon.com/INFO/root: <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<title>405 Method Not Allowed</title>
+<h1>Method Not Allowed</h1>
+<p>The method is not allowed for the requested URL.</p>
+
+[2023-04-04 14:30:39,734] dev-dsk-mzahn-1e-e30a3bfc.us-east-1.amazon.com/INFO/root: Starting request for posts
+[2023-04-04 14:30:39,750] dev-dsk-mzahn-1e-e30a3bfc.us-east-1.amazon.com/INFO/root: <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<title>405 Method Not Allowed</title>
+<h1>Method Not Allowed</h1>
+<p>The method is not allowed for the requested URL.</p>
+
+[2023-04-04 14:30:39,751] dev-dsk-mzahn-1e-e30a3bfc.us-east-1.amazon.com/INFO/root: Starting request for posts
+[2023-04-04 14:30:39,806] dev-dsk-mzahn-1e-e30a3bfc.us-east-1.amazon.com/INFO/root: Starting request for posts
+[2023-04-04 14:30:40,119] dev-dsk-mzahn-1e-e30a3bfc.us-east-1.amazon.com/INFO/root: <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<title>405 Method Not Allowed</title>
+<h1>Method Not Allowed</h1>
+<p>The method is not allowed for the requested URL.</p>
+
+[2023-04-04 14:30:40,119] dev-dsk-mzahn-1e-e30a3bfc.us-east-1.amazon.com/INFO/root: Starting request for todos
+[2023-04-04 14:30:40,282] dev-dsk-mzahn-1e-e30a3bfc.us-east-1.amazon.com/INFO/root: Starting request for posts
+[2023-04-04 14:30:40,327] dev-dsk-mzahn-1e-e30a3bfc.us-east-1.amazon.com/INFO/root: <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<title>405 Method Not Allowed</title>
+<h1>Method Not Allowed</h1>
+<p>The method is not allowed for the requested URL.</p>
+
+[2023-04-04 14:30:40,327] dev-dsk-mzahn-1e-e30a3bfc.us-east-1.amazon.com/INFO/root: Starting request for posts
+[2023-04-04 14:30:40,416] dev-dsk-mzahn-1e-e30a3bfc.us-east-1.amazon.com/INFO/root: <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<title>405 Method Not Allowed</title>
+<h1>Method Not Allowed</h1>
+<p>The method is not allowed for the requested URL.</p>
+
+[2023-04-04 14:30:40,416] dev-dsk-mzahn-1e-e30a3bfc.us-east-1.amazon.com/INFO/root: Starting request for todos
+[2023-04-04 14:30:40,675] dev-dsk-mzahn-1e-e30a3bfc.us-east-1.amazon.com/INFO/root: Starting request for todos
+[2023-04-04 14:30:40,850] dev-dsk-mzahn-1e-e30a3bfc.us-east-1.amazon.com/INFO/root: Starting request for todos
+[2023-04-04 14:30:40,856] dev-dsk-mzahn-1e-e30a3bfc.us-east-1.amazon.com/INFO/root: <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<title>405 Method Not Allowed</title>
+<h1>Method Not Allowed</h1>
+<p>The method is not allowed for the requested URL.</p>
+
+[2023-04-04 14:30:40,856] dev-dsk-mzahn-1e-e30a3bfc.us-east-1.amazon.com/INFO/root: Starting request for todos
+[2023-04-04 14:30:40,942] dev-dsk-mzahn-1e-e30a3bfc.us-east-1.amazon.com/INFO/root: <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<title>405 Method Not Allowed</title>
+<h1>Method Not Allowed</h1>
+<p>The method is not allowed for the requested URL.</p>
+
+[2023-04-04 14:30:40,942] dev-dsk-mzahn-1e-e30a3bfc.us-east-1.amazon.com/INFO/root: Starting request for todos
+[2023-04-04 14:30:41,016] dev-dsk-mzahn-1e-e30a3bfc.us-east-1.amazon.com/INFO/root: Starting request for todos
+[2023-04-04 14:30:41,087] dev-dsk-mzahn-1e-e30a3bfc.us-east-1.amazon.com/INFO/root: Starting request for todos
+[2023-04-04 14:30:41,854] dev-dsk-mzahn-1e-e30a3bfc.us-east-1.amazon.com/INFO/root: Starting request for todos
+[2023-04-04 14:30:42,085] dev-dsk-mzahn-1e-e30a3bfc.us-east-1.amazon.com/INFO/root: Starting request for todos
+[2023-04-04 14:30:42,133] dev-dsk-mzahn-1e-e30a3bfc.us-east-1.amazon.com/INFO/root: Starting request for todos
+[2023-04-04 14:30:42,207] dev-dsk-mzahn-1e-e30a3bfc.us-east-1.amazon.com/INFO/root: Starting request for posts
+[2023-04-04 14:30:42,320] dev-dsk-mzahn-1e-e30a3bfc.us-east-1.amazon.com/INFO/root: Starting request for todos
+[2023-04-04 14:30:43,419] dev-dsk-mzahn-1e-e30a3bfc.us-east-1.amazon.com/INFO/root: <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<title>405 Method Not Allowed</title>
+<h1>Method Not Allowed</h1>
+<p>The method is not allowed for the requested URL.</p>
+
+[2023-04-04 14:30:43,420] dev-dsk-mzahn-1e-e30a3bfc.us-east-1.amazon.com/INFO/root: Starting request for posts
+[2023-04-04 14:30:43,580] dev-dsk-mzahn-1e-e30a3bfc.us-east-1.amazon.com/INFO/root: <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<title>405 Method Not Allowed</title>
+<h1>Method Not Allowed</h1>
+<p>The method is not allowed for the requested URL.</p>
+
+[2023-04-04 14:30:43,580] dev-dsk-mzahn-1e-e30a3bfc.us-east-1.amazon.com/INFO/root: Starting request for todos
+[2023-04-04 14:30:43,583] dev-dsk-mzahn-1e-e30a3bfc.us-east-1.amazon.com/INFO/root: Starting request for posts
+[2023-04-04 14:30:43,904] dev-dsk-mzahn-1e-e30a3bfc.us-east-1.amazon.com/INFO/root: <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<title>405 Method Not Allowed</title>
+<h1>Method Not Allowed</h1>
+<p>The method is not allowed for the requested URL.</p>
+
+[2023-04-04 14:30:43,905] dev-dsk-mzahn-1e-e30a3bfc.us-east-1.amazon.com/INFO/root: Starting request for posts
+[2023-04-04 14:30:43,931] dev-dsk-mzahn-1e-e30a3bfc.us-east-1.amazon.com/INFO/root: Starting request for todos
+[2023-04-04 14:30:43,995] dev-dsk-mzahn-1e-e30a3bfc.us-east-1.amazon.com/INFO/root: Starting request for posts
+[2023-04-04 14:30:44,499] dev-dsk-mzahn-1e-e30a3bfc.us-east-1.amazon.com/INFO/root: Starting request for todos
+[2023-04-04 14:30:44,600] dev-dsk-mzahn-1e-e30a3bfc.us-east-1.amazon.com/INFO/root: Starting request for posts
+[2023-04-04 14:30:45,015] dev-dsk-mzahn-1e-e30a3bfc.us-east-1.amazon.com/INFO/root: Starting request for todos
+[2023-04-04 14:30:45,029] dev-dsk-mzahn-1e-e30a3bfc.us-east-1.amazon.com/INFO/root: <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<title>405 Method Not Allowed</title>
+<h1>Method Not Allowed</h1>
+<p>The method is not allowed for the requested URL.</p>
+
+[2023-04-04 14:30:45,029] dev-dsk-mzahn-1e-e30a3bfc.us-east-1.amazon.com/INFO/root: Starting request for todos
+[2023-04-04 14:30:45,384] dev-dsk-mzahn-1e-e30a3bfc.us-east-1.amazon.com/INFO/root: Starting request for todos
+[2023-04-04 14:30:45,417] dev-dsk-mzahn-1e-e30a3bfc.us-east-1.amazon.com/INFO/root: <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<title>405 Method Not Allowed</title>
+<h1>Method Not Allowed</h1>
+<p>The method is not allowed for the requested URL.</p>
+
+[2023-04-04 14:30:45,417] dev-dsk-mzahn-1e-e30a3bfc.us-east-1.amazon.com/INFO/root: Starting request for todos
+[2023-04-04 14:30:45,650] dev-dsk-mzahn-1e-e30a3bfc.us-east-1.amazon.com/INFO/root: <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<title>405 Method Not Allowed</title>
+<h1>Method Not Allowed</h1>
+<p>The method is not allowed for the requested URL.</p>
+
+[2023-04-04 14:30:45,650] dev-dsk-mzahn-1e-e30a3bfc.us-east-1.amazon.com/INFO/root: Starting request for posts
+[2023-04-04 14:30:45,667] dev-dsk-mzahn-1e-e30a3bfc.us-east-1.amazon.com/INFO/root: Starting request for todos
+[2023-04-04 14:30:45,925] dev-dsk-mzahn-1e-e30a3bfc.us-east-1.amazon.com/INFO/root: Starting request for posts
+[2023-04-04 14:30:46,634] dev-dsk-mzahn-1e-e30a3bfc.us-east-1.amazon.com/INFO/root: Starting request for posts
+[2023-04-04 14:30:46,946] dev-dsk-mzahn-1e-e30a3bfc.us-east-1.amazon.com/INFO/root: <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<title>405 Method Not Allowed</title>
+<h1>Method Not Allowed</h1>
+<p>The method is not allowed for the requested URL.</p>
+
+[2023-04-04 14:30:46,947] dev-dsk-mzahn-1e-e30a3bfc.us-east-1.amazon.com/INFO/root: Starting request for posts
+[2023-04-04 14:30:47,058] dev-dsk-mzahn-1e-e30a3bfc.us-east-1.amazon.com/INFO/root: <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<title>405 Method Not Allowed</title>
+<h1>Method Not Allowed</h1>
+<p>The method is not allowed for the requested URL.</p>
+
+[2023-04-04 14:30:47,059] dev-dsk-mzahn-1e-e30a3bfc.us-east-1.amazon.com/INFO/root: Starting request for todos
+[2023-04-04 14:30:47,373] dev-dsk-mzahn-1e-e30a3bfc.us-east-1.amazon.com/INFO/root: <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<title>405 Method Not Allowed</title>
+<h1>Method Not Allowed</h1>
+<p>The method is not allowed for the requested URL.</p>
+
+[2023-04-04 14:30:47,374] dev-dsk-mzahn-1e-e30a3bfc.us-east-1.amazon.com/INFO/root: Starting request for todos
+[2023-04-04 14:30:47,437] dev-dsk-mzahn-1e-e30a3bfc.us-east-1.amazon.com/INFO/root: Starting request for todos
+[2023-04-04 14:30:47,839] dev-dsk-mzahn-1e-e30a3bfc.us-east-1.amazon.com/INFO/root: Starting request for posts
+[2023-04-04 14:30:47,929] dev-dsk-mzahn-1e-e30a3bfc.us-east-1.amazon.com/INFO/root: Starting request for todos
+[2023-04-04 14:30:48,200] dev-dsk-mzahn-1e-e30a3bfc.us-east-1.amazon.com/INFO/root: <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<title>405 Method Not Allowed</title>
+<h1>Method Not Allowed</h1>
+<p>The method is not allowed for the requested URL.</p>
+
+[2023-04-04 14:30:48,200] dev-dsk-mzahn-1e-e30a3bfc.us-east-1.amazon.com/INFO/root: Starting request for posts
+[2023-04-04 14:30:48,707] dev-dsk-mzahn-1e-e30a3bfc.us-east-1.amazon.com/INFO/root: <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<title>405 Method Not Allowed</title>
+<h1>Method Not Allowed</h1>
+<p>The method is not allowed for the requested URL.</p>
+
+[2023-04-04 14:30:48,708] dev-dsk-mzahn-1e-e30a3bfc.us-east-1.amazon.com/INFO/root: Starting request for posts
+[2023-04-04 14:30:50,005] dev-dsk-mzahn-1e-e30a3bfc.us-east-1.amazon.com/INFO/root: <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<title>405 Method Not Allowed</title>
+<h1>Method Not Allowed</h1>
+<p>The method is not allowed for the requested URL.</p>
+
+[2023-04-04 14:30:50,005] dev-dsk-mzahn-1e-e30a3bfc.us-east-1.amazon.com/INFO/root: Starting request for todos
+[2023-04-04 14:30:50,733] dev-dsk-mzahn-1e-e30a3bfc.us-east-1.amazon.com/INFO/root: Starting request for todos
+[2023-04-04 14:30:52,263] dev-dsk-mzahn-1e-e30a3bfc.us-east-1.amazon.com/INFO/locust.main: Shutting down (exit code 1)

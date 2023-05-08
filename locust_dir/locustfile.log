@@ -1,0 +1,10 @@
+[2023-04-03 23:46:07,975] dev-dsk-mzahn-1e-e30a3bfc.us-east-1.amazon.com/INFO/locust.main: No run time limit set, use CTRL+C to interrupt
+[2023-04-03 23:46:07,975] dev-dsk-mzahn-1e-e30a3bfc.us-east-1.amazon.com/INFO/locust.main: Starting Locust 2.15.1
+[2023-04-03 23:46:07,976] dev-dsk-mzahn-1e-e30a3bfc.us-east-1.amazon.com/INFO/locust.runners: Ramping to 10 users at a rate of 60.00 per second
+[2023-04-03 23:46:07,978] dev-dsk-mzahn-1e-e30a3bfc.us-east-1.amazon.com/INFO/locust.runners: All users spawned: {"UserBehaviour": 10} (10 total users)
+[2023-04-03 23:46:18,452] dev-dsk-mzahn-1e-e30a3bfc.us-east-1.amazon.com/INFO/locust.main: Shutting down (exit code 0)
+[2023-04-03 23:46:30,706] dev-dsk-mzahn-1e-e30a3bfc.us-east-1.amazon.com/INFO/locust.main: No run time limit set, use CTRL+C to interrupt
+[2023-04-03 23:46:30,706] dev-dsk-mzahn-1e-e30a3bfc.us-east-1.amazon.com/INFO/locust.main: Starting Locust 2.15.1
+[2023-04-03 23:46:30,707] dev-dsk-mzahn-1e-e30a3bfc.us-east-1.amazon.com/INFO/locust.runners: Ramping to 10 users at a rate of 60.00 per second
+[2023-04-03 23:46:30,709] dev-dsk-mzahn-1e-e30a3bfc.us-east-1.amazon.com/INFO/locust.runners: All users spawned: {"UserBehaviour": 10} (10 total users)
+[2023-04-03 23:46:36,643] dev-dsk-mzahn-1e-e30a3bfc.us-east-1.amazon.com/INFO/locust.main: Shutting down (exit code 0)

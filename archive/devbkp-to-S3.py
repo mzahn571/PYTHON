@@ -1,0 +1,38 @@
+#!/usr/bin/python3
+from secret import AWS_ACCESS_KEY_ID, AWS_SECRET_ACCESS_KEY, BUCKET_NAME
+from datetime import datetime
+import boto3
+import tarfile
+import os
+import sys
+import posixpath
+from boto3.s3.transfer import S3Transfer
+
+date = datetime.now().strftime("%Y-%m-%d-")
+
+#directory = sys.argv[1]
+directory = "/home/mzahn"
+dirname = os.path.split(directory)[-1]
+filename = date + dirname
+if directory.endswith ('/'):
+    print ('Please remove / after the directory path you have entered')
+else:
+    if posixpath.isdir(directory):
+        tarname = '/tmp/{}.tar.gz'.format(filename)
+        tar = tarfile.open(tarname,'w:gz')
+        tar.add(directory)
+        tar.close()
+#        print('Start to Upload that the', filename + '.tar.gz', 'your S3 Bucket', BUCKET_NAME)
+
+# S3 uploading started
+        client = boto3.client('s3',
+                                aws_access_key_id=AWS_ACCESS_KEY_ID,
+                                aws_secret_access_key=AWS_SECRET_ACCESS_KEY)
+        transfer = S3Transfer(client)
+        transfer.upload_file(tarname, BUCKET_NAME, 'backup/{}.tar.gz'.format(filename))
+ #       print('Backup succesfully uploaded to your S3 bucket', BUCKET_NAME)
+
+#remove temporary backup from local
+        os.remove(tarname)
+    else:
+  #      print('Please enter a valid directory path')

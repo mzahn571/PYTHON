@@ -1,0 +1,27 @@
+from secret import AWS_ACCESS_KEY_ID, AWS_SECRET_ACCESS_KEY
+
+import boto3
+import os
+
+
+
+client = boto3.client('s3',
+                        aws_access_key_id = AWS_ACCESS_KEY_ID,
+                        aws_secret_access_key = AWS_SECRET_ACCESS_KEY)
+                        
+
+# connect to s3 - assuming your creds are all set up and you have boto3 installed
+s3 = boto3.resource('s3')
+
+# identify the bucket - you can use prefix if you know what your bucket name starts with
+for bucket in s3.buckets.all():
+    print(bucket.name)
+
+# get the bucket
+bucket = s3.Bucket('my-s3-bucket')
+
+# use loop and count increment
+count_obj = 0
+for i in bucket.objects.all():
+    count_obj = count_obj + 1
+print(count_obj)
