@@ -1,3 +1,0 @@
-dynamips -H 7200 &
-sleep 2
-mate-terminal --command 'dynagen /home/student/Documents/Python/Python-LAB1.net'
