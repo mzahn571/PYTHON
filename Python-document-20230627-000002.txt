@@ -1,0 +1,1064 @@
+
+================================================================================
+SCRIPT NAME: /home/mzahn/scripts/Python/archive/check_certifications.py 
+================================================================================
+
+#!/usr/bin/python
+# Check certificates on frontend hosts - cbukolt
+
+import subprocess
+import datetime
+
+# Low
+emailproxys_m = ['emailproxy02', 'emailproxy03', 'emailproxy04', 'emailproxy05']
+emailproxys_y = ['emailproxy07', 'emailproxy08', 'emailproxy09']
+emailproxys_l = ['emailproxy10', 'emailproxy11', 'emailproxy12']
+dnspXs = ['dnspX01', 'dnspX02', 'dnspX03', 'dnspX04']
+tlsXs = ['tlsX01', 'tlsX02']
+rpts = ['rptX01'] # haha
+
+# High
+emsXs = ['emsX01', 'emsX02', 'emsX03', 'emsX04', 'emsX05',
+        'emsX06', 'emsX07', 'emsX08', 'emsX09', 'emsX10']
+dnssXs = ['dnssX01', 'dnssX02', 'dnssX03', 'dnssX04']
+
+debug=True
+debug=False
+
+def check_cert_expire(host, location, jump):
+        if jump:
+                process = subprocess.Popen(['ssh', '-ttq', 'mgmtX01', 'ssh', '-ttq', host,\
+                 '-C', '\"cat', location,  '|', 'openssl', 'x509', '-noout', '-enddate\"'],\
+                 stdout=subprocess.PIPE)
+        else:
+                process = subprocess.Popen(['ssh', host, '-qC', 'cat', \
+                 location,  '|', 'openssl', 'x509', '-noout', '-enddate'], stdout=subprocess.PIPE)
+
+        out, err = process.communicate()
+
+        if err:
+                print '[E] ', host, ': ', err
+                quit()
+
+        if debug:
+                print '[D] ', host, ': out: ', out[:-1]
+
+        out = out.split('=')[1][:-1].strip()
+
+        ssl_date_fmt = r'%b %d %H:%M:%S %Y %Z'
+        datetime.datetime.strptime(out, ssl_date_fmt)
+        td = datetime.datetime.strptime(out, ssl_date_fmt) - datetime.datetime.utcnow()
+
+        output = True
+
+        if td.days < 0:
+                output = '[E] ' + host + ': ' + location +  ': Expired on:' + out
+        elif td.days < 90:
+                output = '[W] ' + host + ': ' + location + ': Only ' + td.days + 'days remaining, expires:' + out
+        elif debug:
+                print '[D] ', host, ': Time remaining: ', td.days
+        return output
+
+msg = []
+
+## Low
+
+# Postfix on Loops
+for emailproxy in emailproxys_l:
+        msg.append(check_cert_expire(emailproxy, '/etc/pki/tlsX/certs/external.crt', True))
+
+# External on rpts
+for rpt in rpts:
+        msg.append(check_cert_expire(rpt, '/etc/pki/tlsX/certs/external.crt', True))
+
+# Internal on everyone (s1-hostname.crt)
+for hostgroup in [emailproxys_m, emailproxys_y, emailproxys_l, dnspXs, tlsXs, rpts]:
+        for host in hostgroup:
+                location = '/etc/pki/tlsX/certs/s1-' + host + '.crt'
+                msg.append(check_cert_expire(host, location, True))
+
+## High
+
+for hostgroup in [emsXs, dnssXs]:
+        for host in hostgroup:
+                location = '/etc/pki/tlsX/certs/s1-' + host + '.crt'
+                msg.append(check_cert_expire(host, location, False))
+
+try:
+        # Clear "True"s
+        msg = filter(lambda a: a != True, msg)
+
+        # Convert to string
+        msg = "\n".join(msg)
+except:
+        print "[E] Error processing msg! :", msg
+
+if debug:
+        print msg
+else:
+        from smtplib import SMTP
+        smtpObj = SMTP('localhost')
+        #rec = 'cbukolt@ccn.is.centurylink.net'
+        rec = 'B3-Engineering@ccn.is.centurylink.net'
+        message = 'From: chkcrt.py\n' +\
+         'To: ' + rec + '\n' +\
+         'Subject: Certificate Check Report\n' +\
+         '(Is this email all jumbled? Click "Restore extra line breaks" above.)\n\n' +\
+         msg
+        smtpObj.sendmail('noreply@s1-mgmtX03.is.centurylink.net', rec, message)
+================================================================================
+SCRIPT NAME: /home/mzahn/scripts/Python/archive/check_filesystem.py 
+================================================================================
+
+#!/usr/bin/python
+
+import os, sys
+
+used_space=os.popen("df -h / | grep -v Filesystem | awk '{print $5}'").readline().strip()
+
+if used_space < "85%":
+                print "OK - %s of disk space used." used_space
+                sys.exit(0)
+
+elif used_space == "85%":
+                print "WARNING - %s of disk space used." % used_space
+                sys.exit(1)
+
+elif used_space > "85%":
+                print "CRITIAL - %s of disk space used." % used_space
+                sys.exit(2)
+else:
+                print "UKNOWN - %s of disk space used." % used_space
+================================================================================
+SCRIPT NAME: /home/mzahn/scripts/Python/archive/check_pattern.py 
+================================================================================
+
+#!/usr/bin/python
+#Author: Nguyen Duc Trung Dung - Network Operator (GHP FarEast - VietNam) - ndtdung@ghp-fareast.vn
+#Personal email: dung.nguyendt@gmail.com
+#Blog: http://ndtdung.blogspot.com/
+#Check_pattern
+#Search for pattern in file and alert if pattern match
+#Version 1.0 : Initial version
+#License: GPL
+#-------------------------------------------------------
+
+import optparse, sys, datetime, re, commands
+
+help_pat = 'Symbol\t\tMatches\n' \
+           '------\t\t-------\n' \
+           '|\t\tOR\n' \
+           '^\t\tStart with\n' \
+           '$\t\tEnd with\n' \
+           '. (dot)\t\tAny single character\n' \
+           '\d\t\tAny single digit\n' \
+           '[A-Z]\t\tAny character between A and Z (uppercase)\n' \
+           '[a-z]\t\tAny character between a and z (lowercase)\n' \
+           '[A-Za-z]\tAny character between a and z (case-insensitive)\n' \
+           '+\t\tOne or more of the previous expression (e.g., \d+ matches one or more digits)\n' \
+           '[^/]+\t\tOne or more characters until (and not including) a forward slash\n' \
+           '?\t\tZero or one of the previous expression (e.g., \d? matches zero or one digits)\n' \
+           '*\t\tZero or more of the previous expression (e.g., \d* matches zero, one or more than one digit)\n' \
+           '{1,3}\t\tBetween one and three (inclusive) of the previous expression (e.g., \d{1,3} matches one, two or three digits)\n\n' \
+           'For more on regular expressions, see : http://docs.python.org/2/library/re.html#re-syntax'
+
+#Get option
+optp = optparse.OptionParser()
+optp.add_option('-p', '--showpattern', help='show pattern help', action='store_true', dest='showpat')
+optp.add_option('-n', '--name', help='name your search (Ex: errors, monster... one at time)', dest='name')
+optp.add_option('-f', '--file', help='file location', dest='file')
+optp.add_option('-s', '--schedule', help='STARTTIME-ENDTIME (Ex: 07:00-17:45,19:00-20:00)  default: 00:00-23:59', dest='times')
+optp.add_option('-o', '--off', help='exclude days (Ex: Sunday,Saturday)             default: None', dest='offday')
+optp.add_option('-e', '--error', help='error patterns to search (Ex: "error|caused by" OR "^server" OR etc.)', dest='errors')
+optp.add_option('-i', '--ignorecase', help='ignore case sensitive', action='store_false', dest='case')
+optp.add_option('-q', '--quite', help='do not print matched search', action='store_true', dest='quite')
+optp.add_option('--line', help='number of last lines to check. Default: entire file', dest='line')
+optp.add_option('--outfile', help='output result to FILE', dest='outfile')
+optp.add_option('--mailto', help='send result to RECIPIENT (use "mail" command)', dest='outmail')
+#Check if option full filled then parse
+opts, args = optp.parse_args()
+if opts.showpat is True:
+    print help_pat
+    sys.exit(0)
+if opts.name is None or opts.errors is None or opts.file is None:
+    optp.print_help()
+    sys.exit(2)
+if opts.offday is None:
+    opts.offday = 'none'
+if opts.times is None:
+    opts.times = '00:00-23:59'
+name = opts.name
+schedules = opts.times.split(',')
+
+#Check error function
+def search_error():
+    try:
+        f = open(opts.file, 'r')
+    except IOError as e:
+        print 'Error - {0}: {1}'.format(e.strerror, e.filename)
+        #raise
+        sys.exit(2)
+    else:
+        out = f.read().split('\n')
+        f.close()
+        if opts.case is False: #ignore case
+            pattern = re.compile(r'%s' %opts.errors, re.IGNORECASE)
+        else:
+            pattern = re.compile(r'%s' %opts.errors)
+        msg = []
+        if opts.line is None or int(opts.line) > len(out):#check line
+            opts.line = len(out)
+        else:
+            opts.line = int(opts.line)
+        for i in reversed(range(0, opts.line)):#search for pattern
+            if pattern.search(out[i]):
+                msg.append(out[i].replace('\r',''))
+        if msg: #output
+            emsXg = []
+            if opts.outfile is not None: #output to file
+                try:
+                    f = open(opts.outfile + '.' + datetime.datetime.now().strftime('%Y%m%d'), 'a')
+                except IOError as e:
+                    emsXg.append('Error - {0}: {1}'.format(e.strerror, e.filename))
+                else:
+                    f.write('CRIT - %i %s found: ' %(len(msg), opts.name) + ', '.join(msg))
+                    f.close()
+            if opts.outmail is not None: #output to mail
+                f = open('/tmp/check_pattern.tmp','w')
+                f.write('CRIT - %i %s found: ' %(len(msg), opts.name) + ', '.join(msg))
+                f.close()
+                cmd = 'echo /tmp/check_pattern.tmp | mail -s "' + opts.name + ' found in ' + opts.file + '" ' + opts.outmail + ';rm -f /tmp/check_pattern.tmp'
+                stat, out = commands.getstatusoutput(cmd)
+                if stat <> 0:
+                    emsXg.append(out)
+            if len(msg) > 1:
+                opts.name = opts.name + 's'
+            if opts.quite is True: #do not print matched
+                print 'CRIT - %i %s found in %s. %s' %(len(msg), opts.name, opts.file, ','.join(emsXg))
+                sys.exit(2)
+            else: #print matched
+                print 'CRIT - %i %s found: %s. %s' %(len(msg), opts.name, ', '.join(msg), ','.join(emsXg))
+                sys.exit(2)
+        else:
+            print 'OK - No %s found in %s' %(opts.name, opts.file)
+            sys.exit(0)
+
+#Main program
+today = datetime.datetime.now().strftime("%A")
+now = datetime.datetime.now().time()
+con = datetime.time #convert number to time
+pattern = re.compile('%s' %today, re.IGNORECASE)
+if pattern.search(opts.offday):
+    print 'OK - Not in working day'
+    sys.exit(0)
+else:
+    for sche in schedules:
+        start = map(int, sche.split('-')[0].split(':'))
+        end = map(int, sche.split('-')[1].split(':'))
+        if con(end[0],end[1]) < con(start[0],start[1]): #check if time is pass one day
+            if (now >= con(start[0],start[1])) or (now <= con(end[0],end[1])):
+                search_error()
+            else:
+                pass
+        else:
+            if (now >= con(start[0],start[1])) and (now <= con(end[0],end[1])):
+                search_error()
+            else:
+                pass
+    print 'OK - Out of schedule'
+    sys.exit(0)
+================================================================================
+SCRIPT NAME: /home/mzahn/scripts/Python/archive/devbkp-to-S3.py 
+================================================================================
+
+#!/usr/bin/python3
+from secret import AWS_ACCESS_KEY_ID, AWS_SECRET_ACCESS_KEY, BUCKET_NAME
+from datetime import datetime
+import boto3
+import tarfile
+import os
+import sys
+import posixpath
+from boto3.s3.transfer import S3Transfer
+
+date = datetime.now().strftime("%Y-%m-%d-")
+
+#directory = sys.argv[1]
+directory = "/home/mzahn"
+dirname = os.path.split(directory)[-1]
+filename = date + dirname
+if directory.endswith ('/'):
+    print ('Please remove / after the directory path you have entered')
+else:
+    if posixpath.isdir(directory):
+        tarname = '/tmp/{}.tar.gz'.format(filename)
+        tar = tarfile.open(tarname,'w:gz')
+        tar.add(directory)
+        tar.close()
+#        print('Start to Upload that the', filename + '.tar.gz', 'your S3 Bucket', BUCKET_NAME)
+
+# S3 uploading started
+        client = boto3.client('s3',
+                                aws_access_key_id=AWS_ACCESS_KEY_ID,
+                                aws_secret_access_key=AWS_SECRET_ACCESS_KEY)
+        transfer = S3Transfer(client)
+        transfer.upload_file(tarname, BUCKET_NAME, 'backup/{}.tar.gz'.format(filename))
+ #       print('Backup succesfully uploaded to your S3 bucket', BUCKET_NAME)
+
+#remove temporary backup from local
+        os.remove(tarname)
+    else:
+  #      print('Please enter a valid directory path')
+
+================================================================================
+SCRIPT NAME: /home/mzahn/scripts/Python/archive/devdsk-bkup-to-S3.py 
+================================================================================
+
+#!/usr/bin/python3
+# Date: 4/27/2022
+# Name: devdsk-bkup-to-S3.py
+# Backup dev-desktop to S3 Bucket
+
+from secret import AWS_ACCESS_KEY_ID, AWS_SECRET_ACCESS_KEY, BUCKET_NAME
+from datetime import datetime
+import boto3
+import tarfile
+import os
+import sys
+import posixpath
+from boto3.s3.transfer import S3Transfer
+
+date = datetime.now().strftime("%Y-%m-%d-")
+
+# Directory on dev-dsk must specify the direct path not the link.
+directory = "/local/home/mzahn"
+dirname = os.path.split(directory)[-1]
+filename = date + dirname
+
+if posixpath.isdir(directory):
+    tarname = '/tmp/{}.tar.gz'.format(filename)
+    tar = tarfile.open(tarname,'w:gz')
+    tar.add(directory)
+    tar.close()
+
+# S3 Uploading started
+    client = boto3.client('s3',
+                            aws_access_key_id=AWS_ACCESS_KEY_ID,
+                            aws_secret_access_key=AWS_SECRET_ACCESS_KEY)
+    transfer = S3Transfer(client)
+    transfer.upload_file(tarname, BUCKET_NAME, 'backup/{}.tar.gz'.format(filename))
+
+# Remove temporary backup from local
+    #os.remove(tarname)
+
+================================================================================
+SCRIPT NAME: /home/mzahn/scripts/Python/archive/devdsk-bkup-to-S3-v2.py 
+================================================================================
+
+#!/usr/bin/python3
+# Date: 4/27/2022
+# Name: devdsk-bkup-to-S3.py
+# Backup dev-desktop to S3 Bucket
+
+from secret import AWS_ACCESS_KEY_ID, AWS_SECRET_ACCESS_KEY, BUCKET_NAME
+from datetime import datetime
+import zipfile
+import boto3
+import tarfile
+import os
+import sys
+import posixpath
+from boto3.s3.transfer import S3Transfer
+
+date = datetime.now().strftime("%Y-%m-%d-")
+
+# Directory on dev-dsk must specify the direct path not the link.
+#directory = "/local/home/mzahn"
+exclude_directory="brazil-pkg-cache"
+#dirname = os.path.split(directory)[-1]
+#filename = date + dirname
+
+for dirname, subdirs, files in os.walk("/local/home/mzahn"):
+    if 'exclude_directory' in subdirs:
+        subdirs.remove('exclude_directory')
+    ZipFile.write(dirname)
+    for filename in files:
+        ZipFile.write(os.path.join(dirname, filename))
+ZipFile.close()
+
+#if posixpath.isdir(directory):
+#    tarname = '/tmp/{}.tar.gz'.format(filename)
+#    tar = tarfile.open(tarname,'w:gz')
+#    tar.add(directory)
+#    tar.close()
+
+# S3 Uploading started
+#    client = boto3.client('s3',
+#                            aws_access_key_id=AWS_ACCESS_KEY_ID,
+#                            aws_secret_access_key=AWS_SECRET_ACCESS_KEY)
+#    transfer = S3Transfer(client)
+#    transfer.upload_file(tarname, BUCKET_NAME, 'backup/{}.tar.gz'.format(filename))
+
+# Remove temporary backup from local
+    #os.remove(tarname)
+
+================================================================================
+SCRIPT NAME: /home/mzahn/scripts/Python/archive/dns_graph.py 
+================================================================================
+
+#!/usr/bin/python
+
+import pickle
+import matplotlib.pyplot as plt
+
+
+targets = [['dnspX01','blue'],['dnspX02','green'],['dnspX03','red'],['dnspX04','black']]
+db = {}
+
+for host in targets:
+        db[host[0]] = {'ts': [], 'delay': []}
+
+fh = open('dns_res_profiler.pkl', 'rb')
+try:
+        while True:
+                r = pickle.load(fh)
+                db[r[0]]['delay'].append(r[1])
+                db[r[0]]['ts'].append(r[2])
+except EOFError:
+        print 'EOF, bailing out.'
+
+#with open('dns_res_profiler.pkl', 'rb') as f:
+#       data = pickle.load(f)
+
+targets = [['dnspX01','blue'],['dnspX02','green'],['dnspX03','red'],['dnspX04','black']]
+
+#for host in targets:
+#       for d in data[host[0]]['delay']:
+#               d=d*1000
+#       plt.scatter(data[host[0]]['ts'], \
+#        [d*1000 for d in data[host[0]]['delay']], \
+#        color=host[1],label=host[0])
+
+
+for host in targets:
+        print host
+        plt.scatter(db[host[0]]['ts'], \
+         [d*1000 for d in db[host[0]]['delay']], \
+         color=host[1],label=host[0])
+
+plt.legend(loc='upper left')
+plt.show()
+
+
+================================================================================
+SCRIPT NAME: /home/mzahn/scripts/Python/archive/idp_monitor.py 
+================================================================================
+
+#!/usr/bin/python
+# Some parts, MIT licensed by <charlie@schluting.com>
+# cbukolt/Denver
+
+import time, sys, os, pyinotify
+from smtplib import SMTP
+
+global pdebug
+pdebug = True
+#pdebug = False
+
+# Open file, skip to end
+global fh
+fn = '/var/log/fw/fw'
+#fn = '/home/bukolt/ipsec-logs/just-fmsu.log'
+fh = open(fn, 'r')
+fh.seek(0,2)
+
+global ratelimit
+ratelimit = {}
+
+wm = pyinotify.WatchManager()
+
+dirmask = pyinotify.IN_MODIFY | pyinotify.IN_DELETE | pyinotify.IN_MOVE_SELF | pyinotify.IN_CREATE
+
+class eventHandler(pyinotify.ProcessEvent):
+        # This is the core code that processes lines, handles rate limitng, and sends email alerts
+        def chkLine(self):
+                for line in fh.readlines():
+                        #if 'Received delete notification' in line or\
+                        # ('sshd' in line and 'fatal: Read from socket Failed:' in line) :
+                                # The above check(s) are for noise we don't care about
+                        #       continue
+                        if 'RT_IDP'in line:
+                                smtpObj = SMTP('localhost')
+                                #rec = 'pfgan@ccn.is.centurylink.net'
+                                rec = ['B3-Engineering@ccn.is.centurylink.net','pfagan@ccn.is.centurylink.net']
+                                ts = line.split(' ')[0]
+                                hn = line.split(' ')[1]
+                                atk = line.split(',')[1]
+                                action = line.split(',')[3]
+                                name = line.split(',')[5]
+                                idk = line.split(',')[12]
+
+                                formatted = '\n\n'
+                                for v in [ts,hn,atk,action,name,idk]:
+                                    formatted += v + '\n\n'
+                                formatted += '\n'
+                                message = 'From: idp_monitor.py\n' +\
+                                 'To: ' + ','.join(rec) + '\n' +\
+                                 'Subject: ATTENTION HUMANS! RT_IDP THREAT DETECTED!\n\n' +\
+                                 formatted + line
+                                print message
+                                smtpObj.sendmail('noreply@s1-mgmtX03.is.centurylink.net', rec, message)
+                        #ratelimit[l] = time.time() + 86400 # 24 Hours
+
+        # This reopens the fh handle after a logrotate
+        def chkRotation(self, event):
+                if fn in os.path.join(event.path, event.name):
+                        if pdebug:
+                                print "[DEBG] Reopen triggered!"
+                        global fh
+                        fh.close
+                        fh = open(fn, 'r')
+                        self.chkLine()
+                        # Thanks to rate limiting, we can scan through the new file
+                        # and not worry about double alerts or missing lines.
+                        #fh.seek(0,2)
+                return
+
+        # Here is where we start, this gets called on every line.  We check if it's for ipsec
+        # (remember we monitor the whole dir, see comment on line ~126) and if it is
+        # we hand it off to chkLine for processing.
+        def process_IN_MODIFY(self, event):
+                if fn in os.path.join(event.path, event.name):
+                        #if pdebug:
+                        #       print '[DEBG] File modified: ', event
+                        self.chkLine()
+                else:
+                        if pdebug:
+                                print '[DEBG] Modify called, but not matched: ', event
+
+        def process_IN_MOVE_SELF(self, event):
+                if pdebug:
+                        print "[DEBG] File moved!  Still reading from old file."
+
+        def process_IN_CREATE(self, event):
+                # Note: Logrotate isn't triggering this, not sure why....
+                # _IN_DELETE below is what actually gets called during a rotate.
+                print '[DEBG] CREATE: ', event
+                self.chkRotation(event)
+
+        def process_IN_DELETE(self, event):
+                if pdebug:
+                        print "[DEBG] File deleted!", event
+                self.chkRotation(event)
+
+
+print 'Sending startup email...'
+smtpObj = SMTP('localhost')
+rec = ['pfagan@ccn.is.centurylink.net','B3-Engineering@ccn.is.centurylink.net']
+message = 'From: idp_monitor.py\n' +\
+ 'To: ' + ','.join(rec) + '\n' +\
+ 'Subject: idp_monitor is running\n' +\
+ 'hello humans.'
+smtpObj.sendmail('noreply@s1-mgmtX03.is.centurylink.net', rec, message)
+print 'done'
+notifier = pyinotify.Notifier(wm, eventHandler())
+# Need to watch the dir containing fn otherwise we can't detect logrotate
+index = fn.rfind('/')
+wm.add_watch(fn[:index], dirmask)
+
+while True:
+        try:
+                notifier.process_events()
+                if notifier.check_events():
+                        notifier.read_events()
+        except KeyboardInterrupt:
+                break
+================================================================================
+SCRIPT NAME: /home/mzahn/scripts/Python/archive/log_pattern_freg.py 
+================================================================================
+
+#!/usr/bin/python
+##-------------------------------------------------------------------
+## File : log_pattern_frequency.py
+## Description : If too many pattern of log entries has happened recently, raise alerts
+##
+## Example: log_pattern_frequency.py --logfile /opt/app/app-gc.log --check_pattern "Full GC"
+##                          \--warning_count 10 --critical_count 20
+##
+## --
+## Created : <2017-07-25>
+## Updated: Time-stamp: <2017-07-26 09:18:03>
+##-------------------------------------------------------------------
+import sys, os
+import argparse
+import requests, json
+
+SYS_EXIT_WARN = 1
+SYS_EXIT_CRI = 2
+SYS_EXIT_OK = 0
+################################################################################
+# https://stackoverflow.com/questions/136168/get-last-n-lines-of-a-file-with-python-similar-to-tail
+def tail(f, lines=20):
+    total_lines_wanted = lines
+
+    BLOCK_SIZE = 1024
+    f.seek(0, 2)
+    block_end_byte = f.tell()
+    lines_to_go = total_lines_wanted
+    block_number = -1
+    blocks = [] # blocks of size BLOCK_SIZE, in reverse order starting
+                # from the end of the file
+    while lines_to_go > 0 and block_end_byte > 0:
+        if (block_end_byte - BLOCK_SIZE > 0):
+            # read the last block we haven't yet read
+            f.seek(block_number*BLOCK_SIZE, 2)
+            blocks.append(f.read(BLOCK_SIZE))
+        else:
+            # file too small, start from begining
+            f.seek(0,0)
+            # only read what was not read
+            blocks.append(f.read(block_end_byte))
+        lines_found = blocks[-1].count('\n')
+        lines_to_go -= lines_found
+        block_end_byte -= BLOCK_SIZE
+        block_number -= 1
+    all_read_text = ''.join(reversed(blocks))
+    return '\n'.join(all_read_text.splitlines()[-total_lines_wanted:])
+
+
+def count_pattern_in_log_tail(fname, tail_log_count, pattern_string):
+    count = 0
+
+    with open(fname,'r') as f:
+        message = tail(f, tail_log_count)
+        # Escape double quotes for JSON
+        for line in message.split("\n"):
+            if pattern_string in line:
+                count = count + 1
+    return count
+
+############################################################################
+if __name__ == '__main__':
+    parser = argparse.ArgumentParser()
+    parser.add_argument('--logfile', required=True, \
+                        help="Tail log file", type=str)
+    parser.add_argument('--check_pattern', required=True, \
+                        help="What pattern to check", type=str)
+    parser.add_argument('--tail_log_num', required=False, default=100,\
+                        help="Tail last multiple lines of log file", type=int)
+    parser.add_argument('--warning_count', required=False, default=5,\
+                        help="If matched entries more than this, but lower than --critical_count, quit with warning", \
+                        type=int)
+    parser.add_argument('--critical_count', required=False, default=10,\
+                        help="If matched entries more than this, quit with error", \
+                        type=int)
+    l = parser.parse_args()
+
+    try:
+        pattern_count = count_pattern_in_log_tail(l.logfile, l.tail_log_num, l.check_pattern)
+        if pattern_count >= l.critical_count:
+            print("ERROR: %d full gc has happened in last %d lines of %s|full_count=%d"  \
+                  % (pattern_count, l.tail_log_num, l.logfile, pattern_count))
+            sys.exit(SYS_EXIT_CRI)
+
+        if pattern_count >= l.warning_count:
+            print("WARNING: %d full gc has happened in last %d lines of %s|full_count=%d"  \
+                  % (pattern_count, l.tail_log_num, l.logfile, pattern_count))
+            sys.exit(SYS_EXIT_WARN)
+
+        print("OK: %d full gc has happened in last %d lines of %s|full_count=%d"  \
+              % (pattern_count, l.tail_log_num, l.logfile, pattern_count))
+        sys.exit(SYS_EXIT_OK)
+    except Exception as e:
+        print("ERROR: Fail to get gc count: %s" % (e))
+        sys.exit(SYS_EXIT_CRI)
+## File : log_pattern_frequency.py ends
+================================================================================
+SCRIPT NAME: /home/mzahn/scripts/Python/archive/rmonitor_monitor.py 
+================================================================================
+
+#!/usr/bin/python
+# Some parts, MIT licensed by <charlie@schluting.com>
+# cbukolt/Denver
+
+import time, sys, os, pyinotify
+from smtplib import SMTP
+
+global pdebug
+pdebug = True
+pdebug = False
+
+# Open file, skip to end
+global fh
+fn = '/var/log/nagios/remote_logs/rmonitor/rmonitor'
+fh = open(fn, 'r')
+fh.seek(0,2)
+
+global ratelimit
+ratelimit = {}
+
+wm = pyinotify.WatchManager()
+
+dirmask = pyinotify.IN_MODIFY | pyinotify.IN_DELETE | pyinotify.IN_MOVE_SELF | pyinotify.IN_CREATE
+
+class eventHandler(pyinotify.ProcessEvent):
+        # This is the core code that processes lines, handles rate limitng, and sends email alerts
+        def chkLine(self):
+                for line in fh.readlines():
+                        if 'removed' in line:
+                                alert = 'FAILOVER'
+                        elif 'Route' in line or 'route' in line:
+                                alert = 'ROUTE'
+                        elif 'Fail' in line or 'fail' in line:
+                                if 'query' in line:
+                                        continue
+                                alert = 'FAIL'
+                        else:
+                                continue
+
+                        # I'm disabling rate-limiting since once traffic fails over
+                        # it requires manual intervention to switch back.  The script
+                        # won't flood inboxes.
+
+                        # Rate limiting - If we sent the same message in the last 24 hours,
+                        # don't send it again.
+
+                        # Scan through our ratelimit dict and remove expired entries.
+                        # Failing to do this introduces a memory leak.
+                        #try:
+                        #for k in ratelimit.keys():
+                        # Immediatly clear previous "DOWN" alert(s) if we are back UP
+                        # so we don't  miss an alert.
+                        # Note: k = the alert, ratelimit[k] is the entry date!
+                        ##      if 'UP' in alert:
+                        #               if 'down' in k:
+                        #                       pass
+                        #               elif 'Established to' in k:
+                        #                       pass
+                        #       elif ratelimit[k] <= time.time():
+                        #               pass
+                        #       else:
+                        #               continue
+                        #       ratelimit.pop(k)
+                        ##except TypeError:
+                        ##      print '[BUG] TypeError. k:', k, ' ratelimit:', ratelimit
+
+                        ## Don't cache UPs
+                        #if 'UP' not in alert:
+                        #       # Strip timestamp
+                        #       l = ' '.join(line.split(' ')[1:])
+                        #       try:
+                        #               if ratelimit[l]:
+                        #                       if pdebug:
+                        #                               print '[DEBG] Alert rate-limited'
+                        #                       continue
+                        #       except KeyError:
+                        #               pass
+                        #       #ratelimit[l] = time.time() + 86400 # 24 Hours
+                        #       ratelimit[l] = time.time() + 3600 # 1 Hour
+                        ## First time seeing alert, send notification and add to
+                        ## rate limiting cache.
+                        prefix = '[' + alert + ']'
+                        msg = prefix + ' ' + line.rstrip()
+                        if pdebug:
+                                print '[DEBG] Alert is fresh: ', msg
+                        else:
+                                smtpObj = SMTP('localhost')
+                                rec = 'pfagan@ccn.is.centurylink.net'
+                                #rec = 'ECS-S1-Alerts@ccn.is.centurylink.net'
+                                message = 'From: rmonitor_monitor.py\n' +\
+                                 'To: ' + rec + '\n' +\
+                                 'Subject: RMONITOR ALERT: ' + prefix + '\n' +\
+                                 msg
+                                smtpObj.sendmail('noreply@s1-mgmtX03.is.centurylink.net', rec, message)
+                        #ratelimit[l] = time.time() + 86400 # 24 Hours
+
+        # This reopens the fh handle after a logrotate
+        def chkRotation(self, event):
+                if fn in os.path.join(event.path, event.name):
+                        if pdebug:
+                                print "[DEBG] Reopen triggered!"
+                        global fh
+                        fh.close
+                        fh = open(fn, 'r')
+                        self.chkLine()
+                        # Thanks to rate limiting, we can scan through the new file
+                        # and not worry about double alerts or missing lines.
+                        #fh.seek(0,2)
+                return
+
+        # Here is where we start, this gets called on every line.  We check if it's for ipsec
+        # (remember we monitor the whole dir, see comment on line ~126) and if it is
+        # we hand it off to chkLine for processing.
+        def process_IN_MODIFY(self, event):
+                if fn in os.path.join(event.path, event.name):
+                        if pdebug:
+                                print '[DEBG] File modified: ', event
+                        self.chkLine()
+                else:
+                        if pdebug:
+                                print '[DEBG] Modify called, but not matched: ', event
+
+        def process_IN_MOVE_SELF(self, event):
+                if pdebug:
+                        print "[DEBG] File moved!  Still reading from old file."
+
+        def process_IN_CREATE(self, event):
+                # Note: Logrotate isn't triggering this, not sure why....
+                # _IN_DELETE below is what actually gets called during a rotate.
+                print '[DEBG] CREATE: ', event
+                self.chkRotation(event)
+
+        def process_IN_DELETE(self, event):
+                if pdebug:
+                        print "[DEBG] File deleted!", event
+                self.chkRotation(event)
+
+
+
+notifier = pyinotify.Notifier(wm, eventHandler())
+# Need to watch the dir containing fn otherwise we can't detect logrotate
+index = fn.rfind('/')
+wm.add_watch(fn[:index], dirmask)
+
+while True:
+        try:
+                notifier.process_events()
+                if notifier.check_events():
+                        notifier.read_events()
+        except KeyboardInterrupt:
+                break
+
+================================================================================
+SCRIPT NAME: /home/mzahn/scripts/Python/archive/smtp_profiler.py 
+================================================================================
+
+#!/usr/bin/python
+
+# check_by_ssh_mgmtX01!"/usr/bin/ssh -q s1-rptX01 $USER1$/check_smtp -t 20 -H mail5.ida.org"
+# $USER1$/check_by_ssh -o ConnectionAttemailproxyts=3 -o ConnectTimeout=5 -E -t 30 -H IP ADDRESS -l syscheck -i $USER5$ -C$ARG1$
+
+import subprocess
+import datetime
+import Queue
+import threading
+import time
+import pickle
+
+global q
+q = Queue.Queue()
+
+def testloop(host):
+        while(True):
+                p = subprocess.Popen('/usr/lib64/nagios/plugins/check_by_ssh -o ConnectionAttemailproxyts=3 -o ConnectTimeout=5 -E -t 30 -H IP ADDRESS -l syscheck -C "/usr/bin/ssh -q s1-rptX01 /usr/lib64/nagios/plugins/check_smtp -v -t 120 -H {0}"'.format(host), shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+                out, err = p.communicate()
+                q.put([datetime.datetime.now(),host,out,err])
+                time.sleep(5)
+
+def main():
+        targets = ['mail5.ida.org', ' mail4.ida.org']
+
+        threads = []
+        for host in targets:
+                t = threading.Thread(target=testloop,args=(host,))
+                t.setDaemon(True)
+                threads.append(t)
+
+        for thread in threads:
+                thread.start()
+
+        while(True):
+                r = q.get()
+                try:
+                        with open('smtp_profiler.pkl', 'rb') as fh:
+                                db = pickle.load(fh)
+                except (EOFError,IOError) as e:
+                        print 'Warning: Could not load output file.  First run? : {0} {0}'.format(e.message,e.args)
+                        db = []
+                with open('smtp_profiler.pkl', 'wb+') as fh:
+                        db.append(r)
+                        pickle.dump(db,fh)
+                print 'output: {0}'.format(r)
+
+
+if __name__ == '__main__':
+        main()
+
+
+================================================================================
+SCRIPT NAME: /home/mzahn/scripts/Python/archive/vpn_monitor.py 
+================================================================================
+
+#!/usr/bin/python
+# Some parts, MIT licensed by <charlie@schluting.com>
+# cbukolt/Denver
+
+import time, sys, os, pyinotify
+from smtplib import SMTP
+
+global pdebug
+pdebug = True
+pdebug = False
+
+# Open file, skip to end
+global fh
+fn = '/var/log/ipsec/ipsec'
+#fn = '/home/bukolt/ipsec-logs/just-fmsu.log'
+fh = open(fn, 'r')
+fh.seek(0,2)
+
+def log(line):
+        if pdebug:
+                print line
+        else:
+                logh.write(line + '\n')
+                logh.flush()
+
+if not pdebug:
+        # We are running in daemon mode, use logfile
+        logh = open('/var/log/vpn_monitor.log', 'a')
+        log('vpn_monitor.py started.')
+
+global ratelimit
+ratelimit = {}
+
+wm = pyinotify.WatchManager()
+
+dirmask = pyinotify.IN_MODIFY | pyinotify.IN_DELETE | pyinotify.IN_MOVE_SELF | pyinotify.IN_CREATE
+
+class eventHandler(pyinotify.ProcessEvent):
+        # This is the core code that processes lines, handles rate limitng, and sends email alerts
+        def chkLine(self):
+                for line in fh.readlines():
+                        #if 'Received delete notification' in line or\
+                        # ('sshd' in line and 'fatal: Read from socket Failed:' in line) :
+                                # The above check(s) are for noise we don't care about
+                        #       continue
+                        if ' changed state to down' in line or ' is down. ' in line:
+                                alert = 'TUNDWN'
+                        elif ' changed state to up' in line or ' is up. ' in line:
+                                alert = 'TUNUP'
+                        elif ' Certificate has expired. ' in line:
+                                alert = 'TUNCERT'
+                        elif 'BGP' in line:
+                                if 'Established to' in line or ' Down BGP ' in line:
+                                        alert = 'BGPDWN'
+                                elif 'to Established' in line or ' Up' in line:
+                                        alert = 'BGPUP'
+                                else:
+                                        alert = 'BGPUNK'
+                        else:
+                                continue
+
+
+
+                        # Rate limiting - If we sent the same message in the last 24 hours,
+                        # don't send it again.
+
+                        # Scan through our ratelimit dict and remove expired entries.
+                        # Failing to do this introduces a memory leak.
+                        #try:
+                        for k in ratelimit.keys():
+                        # Immediately clear previous "DOWN" alert(s) if we are back UP
+                        # so we don't  miss an alert.
+                        # Note: k = the alert, ratelimit[k] is the entry date!
+                                if 'UP' in alert:
+                                        if 'down' in k:
+                                                pass
+                                        elif 'Established to' in k:
+                                                pass
+                                elif ratelimit[k] <= time.time():
+                                        pass
+                                else:
+                                        continue
+                                ratelimit.pop(k)
+                        #except TypeError:
+                        #       print '[BUG] TypeError. k:', k, ' ratelimit:', ratelimit
+
+                        # Don't cache UPs
+                        if 'UP' not in alert:
+                                # Strip timestamp
+                                l = ' '.join(line.split(' ')[1:])
+                                try:
+                                        if ratelimit[l]:
+                                                #if pdebug:
+                                                #       print 'Alert rate-limited'
+                                                continue
+                                except KeyError:
+                                        pass
+                                #ratelimit[l] = time.time() + 86400 # 24 Hours
+                                ratelimit[l] = time.time() + 3600 # 1 Hour
+                        # First time seeing alert, send notification and add to
+                        # rate limiting cache.
+                        prefix = '[' + alert + ']'
+                        msg = prefix + ' ' + line.rstrip()
+                        #log('Alert is fresh:\n\t{0}'.format(msg))
+                        if 'DWN' in prefix: # Variable Reuse
+                                prefix = 'Alert: '
+                        else:
+                                prefix = ''
+                        log(msg)
+                        if not pdebug:
+                                smtpObj = SMTP('localhost')
+                                #rec = 'pfagan@ccn.is.centurylink.net'
+                                rec = ['B3-Engineering@ccn.is.centurylink.net', 'pfagan@ccn.is.centurylink.net']
+                                message = 'From: vpn_monitor.py\n' +\
+                                 'To: ' + ','.join(rec) + '\n' +\
+                                 'Subject: IPSEC ALERT ' + prefix + '\n' +\
+                                 msg
+                                smtpObj.sendmail('noreply@s1-mgmtX03.is.centurylink.net', rec, message)
+                        #ratelimit[l] = time.time() + 86400 # 24 Hours
+
+        # This reopens the fh handle after a logrotate
+        def chkRotation(self, event):
+                if fn in os.path.join(event.path, event.name):
+                        log("Reopen triggered!")
+                        global fh
+                        fh.close
+                        fh = open(fn, 'r')
+                        self.chkLine()
+                        # Thanks to rate limiting, we can scan through the new file
+                        # and not worry about double alerts or missing lines.
+                        #fh.seek(0,2)
+                return
+
+        # Here is where we start, this gets called on every line.  We check if it's for ipsec
+        # (remember we monitor the whole dir, see comment on line ~126) and if it is
+        # we hand it off to chkLine for processing.
+        def process_IN_MODIFY(self, event):
+                if fn in os.path.join(event.path, event.name):
+                        #if pdebug:
+                        #       print 'File modified: ', event
+                        self.chkLine()
+                else:
+                        log('Modify called, but not matched:\n\t{0}'.format(event))
+
+        def process_IN_MOVE_SELF(self, event):
+                log("File moved!  Still reading from old file.")
+
+        def process_IN_CREATE(self, event):
+                # Note: Logrotate isn't triggering this, not sure why....
+                # _IN_DELETE below is what actually gets called during a rotate.
+                log('CREATE:\n\t{0}'.format(event))
+                self.chkRotation(event)
+
+        def process_IN_DELETE(self, event):
+                log("File deleted:\n\t{0}".format(event))
+                self.chkRotation(event)
+
+
+
+notifier = pyinotify.Notifier(wm, eventHandler())
+# Need to watch the dir containing fn otherwise we can't detect logrotate
+index = fn.rfind('/')
+wm.add_watch(fn[:index], dirmask)
+
+while True:
+        try:
+                notifier.process_events()
+                if notifier.check_events():
+                        notifier.read_events()
+        except KeyboardInterrupt:
+                break
+
+                #!/bin/more
